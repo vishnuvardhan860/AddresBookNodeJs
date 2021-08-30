@@ -1,4 +1,4 @@
-//Ability To Find Number Of Contacts In address book
+// Check and ensure if there is no duplicate entry
 const prompt = require('prompt-sync')();
 
 let nameRegex = RegExp("^[A-Z]{1}[a-z]{2,}$");
@@ -62,15 +62,20 @@ let getContact = () => {
     return contactInput;
 };
 
-let countContacts = () => addressBookArr.reduce((total, contact) => total + 1, 0);    // Using reduce Function to get the count
+let countContacts = () => addressBookArr.reduce((total, contact) => total + 1, 0);
 
 let viewContacts = () => {
     addressBookArr.forEach(contact => console.log(contact.toString()));
 }
 
 let addContact = (contact) => {
-    addressBookArr.push(contact);
-    console.log("Contact Added Successfully!!")
+    let index = getindexByName(contact.firstName, contact.lastName);
+    if (index == -1) {
+        addressBookArr.push(contact);
+        console.log("Contact Added Successfully!!");
+    }
+    else
+        console.log("Could not add contact as Name already exists!!");
 }
 
 let getindexByName = (frstName, lstName) => {
@@ -89,7 +94,7 @@ let editContact = () => {
     }
 }
 
-// delete contact UC5
+
 let deleteContact = () => {
     let frstName = prompt("Enter First Name : ");
     let lstName = prompt("Enter Lastt Name : ");
@@ -103,6 +108,7 @@ let deleteContact = () => {
     }
 }
 
+        console.log("Welcome to AddressBook Program!!");
         let choice = 0;
         do {
             console.log("Choose\n1. View Contacts\n2. Add Contact\n3. Edit Contact By name\n4. Delete Contact\n5. Exit");
