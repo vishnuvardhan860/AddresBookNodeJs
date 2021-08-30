@@ -1,5 +1,4 @@
-//Ability To Find Existing contact and edit
-
+//Find the person and Deleting person name from array
 const prompt = require('prompt-sync')();
 
 let nameRegex = RegExp("^[A-Z]{1}[a-z]{2,}$");
@@ -8,7 +7,7 @@ let cityStateRegex = RegExp("^[A-Za-z]{4,}$");
 let zipRegex = RegExp("^[1-9]{1}[0-9]{2}[ ]?[0-9]{3}$");
 let phoneNumberRegex = RegExp("^[1-9]{1}[0-9]{9}$");
 let emailRegex = RegExp("^([a-z]+)([0-9])*([_+-.]{1}[a-z0-9]+)*(@)([a-z0-9]+)[.]([a-z]{2,})([.][a-z]{2}){0,1}$");
-class AddressBook {
+class Contact {
     constructor(...params) {
         if (nameRegex.test(params[0]))
             this.firstName = params[0];
@@ -68,6 +67,9 @@ let addContact = (contact) => {
     addressBookArr.push(contact);
     console.log("Contact Added Successfully!!")
 }
+let getindexByName = (frstName, lstName) => {
+    return addressBookArr.findIndex(contact => contact.firstName == frstName && contact.lastName == lstName);
+}
 let editContact = () => {
     let frstName = prompt("Enter First Name : ");
     let lstName = prompt("Enter Lastt Name : ");
@@ -79,10 +81,22 @@ let editContact = () => {
         console.log("Contact edited successfully!!");
     }
 }
+let deleteContact = () => {
+    let frstName = prompt("Enter First Name : ");
+    let lstName = prompt("Enter Last Name : ");
+    let index = getindexByName(frstName, lstName);
+    if (index == -1)
+        console.log("Could not find the contact!!")
+    else {
+        console.log("Contact deleted successfully!!");
+        return addressBookArr.splice(index, 1);
+
+    }
+}
         console.log("Welcome to AddressBook Program!!");
         let choice = 0;
         do {
-            console.log("Choose\n1. View Contacts\n2. Add Contact\n3. Edit Contact By name\n4. Exit");
+            console.log("Choose\n1. View Contacts\n2. Add Contact\n3. Edit Contact By name\n4. Delete Contact\n5. Exit");
             choice = prompt("Enter Your Choice ");
             switch (choice) {
                 case "1": viewContacts();
@@ -91,8 +105,10 @@ let editContact = () => {
                     break;
                 case "3": editContact();
                     break;
-                case "4": console.log("Bye!!");
+                case "4": console.log(deleteContact());
+                    break;
+                case "5": console.log("Thank You!!");
                     break;
                 default: console.log("Invalid Choice !!");
             }
-        } while (choice != 4)
+        } while (choice != 5)
