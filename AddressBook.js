@@ -1,4 +1,5 @@
-// Adding contacts
+//Ability To Find Existing contact and edit
+
 const prompt = require('prompt-sync')();
 
 let nameRegex = RegExp("^[A-Z]{1}[a-z]{2,}$");
@@ -60,21 +61,38 @@ let getContact = () => {
     return contactInput;
 };
 
+let viewContacts = () => {
+    addressBookArr.forEach(contact => console.log(contact.toString()));
+}
 let addContact = (contact) => {
     addressBookArr.push(contact);
     console.log("Contact Added Successfully!!")
 }
-console.log("Welcome to AddressBook Program!!");
-let choice = 0;
-do {
-    console.log("Choose\n1. Add Contact\n2. Exit");
-    choice = prompt("Enter Your Choice ");
-    switch (choice) {
-        case "1": addContact(getContact());
-            break;
-        case "2": console.log("Thankyou!");
-            break;
-        default: console.log("Invalid Choice !!");
+let editContact = () => {
+    let frstName = prompt("Enter First Name : ");
+    let lstName = prompt("Enter Lastt Name : ");
+    let index = addressBookArr.findIndex(contact => contact.firstName == frstName && contact.lastName == lstName);
+    if (index == -1)
+        console.log("Could not find the contact!!")
+    else {
+        addressBookArr[index] = getContact();
+        console.log("Contact edited successfully!!");
     }
-} while (choice != 2)
-
+}
+        console.log("Welcome to AddressBook Program!!");
+        let choice = 0;
+        do {
+            console.log("Choose\n1. View Contacts\n2. Add Contact\n3. Edit Contact By name\n4. Exit");
+            choice = prompt("Enter Your Choice ");
+            switch (choice) {
+                case "1": viewContacts();
+                    break;
+                case "2": addContact(getContact());
+                    break;
+                case "3": editContact();
+                    break;
+                case "4": console.log("Bye!!");
+                    break;
+                default: console.log("Invalid Choice !!");
+            }
+        } while (choice != 4)
