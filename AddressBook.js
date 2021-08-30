@@ -1,4 +1,5 @@
-// Check and ensure if there is no duplicate entry
+// Search contact by city.
+
 const prompt = require('prompt-sync')();
 
 let nameRegex = RegExp("^[A-Z]{1}[a-z]{2,}$");
@@ -108,23 +109,36 @@ let deleteContact = () => {
     }
 }
 
-        console.log("Welcome to AddressBook Program!!");
-        let choice = 0;
-        do {
-            console.log("Choose\n1. View Contacts\n2. Add Contact\n3. Edit Contact By name\n4. Delete Contact\n5. Exit");
-            choice = prompt("Enter Your Choice ");
-            switch (choice) {
-                case "1": viewContacts();
-                    break;
-                case "2": addContact(getContact());
-                    break;
-                case "3": editContact();
-                    break;
-                case "4": console.log(deleteContact());
-                    break;
-                case "5": console.log("Bye!!");
-                    break;
-                default: console.log("Invalid Choice !!");
-            }
-        
-        } while (choice != 5)
+let searchByCity = () => {
+    let searchCity = prompt("Enter the city name ");
+    return addressBookArr.filter(contact => contact.city == searchCity);
+}
+
+let searchByState = () => {
+    let searchState = prompt("Enter the state name ");
+    return addressBookArr.filter(contact => contact.state == searchState);
+}
+
+console.log("Welcome to AddressBook Program!!");
+let choice = 0;
+do {
+    console.log("Choose\n1. View Contacts\n2. Add Contact\n3. Edit Contact By name\n4. Delete Contact\n5. Search Contacts By City\n6. Search Contacts By State\n7. Exit");
+    choice = prompt("Enter Your Choice ");
+    switch (choice) {
+        case "1": viewContacts();
+            break;
+        case "2": addContact(getContact());
+            break;
+        case "3": editContact();
+            break;
+        case "4": console.log(deleteContact().toString());
+            break;
+        case "5": searchByCity();
+            break;
+        case "6": searchByState();
+            break;
+        case "7": console.log("Bye!!");
+            break;
+        default: console.log("Invalid Choice !!");
+    }
+} while (choice != 7)
