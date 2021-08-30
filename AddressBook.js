@@ -1,4 +1,4 @@
-//Find the person and Deleting person name from array
+//Ability To Find Number Of Contacts In address book
 const prompt = require('prompt-sync')();
 
 let nameRegex = RegExp("^[A-Z]{1}[a-z]{2,}$");
@@ -39,6 +39,8 @@ class Contact {
         return "First Name : " + this.firstName + ", Last Name : " + this.lastName + ", Address : " + this.address + ", City : " + this.city + ", State : " + this.state + ", Zip : " + this.zip + ", Phone Number : " + this.phoneNumber + ", Email : " + this.email;
     }
 }
+
+
 let addressBookArr = new Array();
 
 let getContact = () => {
@@ -60,16 +62,21 @@ let getContact = () => {
     return contactInput;
 };
 
+let countContacts = () => addressBookArr.reduce((total, contact) => total + 1, 0);    // Using reduce Function to get the count
+
 let viewContacts = () => {
     addressBookArr.forEach(contact => console.log(contact.toString()));
 }
+
 let addContact = (contact) => {
     addressBookArr.push(contact);
     console.log("Contact Added Successfully!!")
 }
+
 let getindexByName = (frstName, lstName) => {
     return addressBookArr.findIndex(contact => contact.firstName == frstName && contact.lastName == lstName);
 }
+
 let editContact = () => {
     let frstName = prompt("Enter First Name : ");
     let lstName = prompt("Enter Lastt Name : ");
@@ -81,9 +88,11 @@ let editContact = () => {
         console.log("Contact edited successfully!!");
     }
 }
+
+// delete contact UC5
 let deleteContact = () => {
     let frstName = prompt("Enter First Name : ");
-    let lstName = prompt("Enter Last Name : ");
+    let lstName = prompt("Enter Lastt Name : ");
     let index = getindexByName(frstName, lstName);
     if (index == -1)
         console.log("Could not find the contact!!")
@@ -93,7 +102,7 @@ let deleteContact = () => {
 
     }
 }
-        console.log("Welcome to AddressBook Program!!");
+
         let choice = 0;
         do {
             console.log("Choose\n1. View Contacts\n2. Add Contact\n3. Edit Contact By name\n4. Delete Contact\n5. Exit");
@@ -107,8 +116,9 @@ let deleteContact = () => {
                     break;
                 case "4": console.log(deleteContact());
                     break;
-                case "5": console.log("Thank You!!");
+                case "5": console.log("Bye!!");
                     break;
                 default: console.log("Invalid Choice !!");
             }
+        
         } while (choice != 5)
